@@ -6,12 +6,12 @@
 
 </div>
 
-Description.
+Nest.js adapter for tinyhttp
 
 ## Install
 
 ```sh
-pnpm i pkg
+pnpm i @tinyhttp/nest
 ```
 
 [npm-url]: https://npmjs.com/package/@tinyhttp/nest
