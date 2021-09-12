@@ -1,8 +1,8 @@
 {
-  "name": "repo-starter",
+  "name": "@tinyhttp/nest",
   "version": "0.0.0",
   "type": "module",
-  "description": "description",
+  "description": "Nest.js adapter for tinyhttp",
   "homepage": "https://github.com/tinyhttp/repo#readme",
   "repository": {
     "type": "git",
@@ -18,7 +18,10 @@
     "node.js",
     "web framework",
     "web",
-    "backend"
+    "backend",
+    "nest",
+    "nestjs",
+    "nestjs-adapter"
   ],
   "author": "v1rtl",
   "license": "MIT",
