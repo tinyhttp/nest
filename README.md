@@ -11,7 +11,26 @@ Nest.js adapter for tinyhttp
 ## Install
 
 ```sh
-pnpm i @tinyhttp/nest
+npm i @tinyhttp/@tinyhttp/nest
+yarn add @tinyhttp/@tinyhttp/nest
+pnpm i @tinyhttp/@tinyhttp/nest
+
+```
+
+## Usage:
+
+```typescript
+
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import {NestTinyHttpApplication} from '@tinyhttp/nest'
+
+async function bootstrap() {
+  const app = await NestFactory.create<NestTinyHttpApplication>(AppModule);
+  await app.listen(3000);
+}
+bootstrap();
+
 ```
 
 [npm-url]: https://npmjs.com/package/@tinyhttp/nest
