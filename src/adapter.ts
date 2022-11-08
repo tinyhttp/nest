@@ -5,10 +5,16 @@ import {
   NestApplicationOptions,
   VersioningType
 } from '@nestjs/common'
-import { VersioningOptions, VersionValue, VERSION_NEUTRAL } from '@nestjs/common/interfaces'
+import { RawBodyRequest, VersioningOptions, VersionValue, VERSION_NEUTRAL } from '@nestjs/common/interfaces'
 import { RouterMethodFactory } from '@nestjs/core/helpers/router-method-factory'
 import { isString, isUndefined } from '@nestjs/common/utils/shared.utils'
-import { json, urlencoded } from 'body-parser'
+import {
+  json as bodyParserJson,
+  Options,
+  OptionsJson,
+  OptionsUrlencoded,
+  urlencoded as bodyParserUrlencoded
+} from 'body-parser'
 import { cors } from '@tinyhttp/cors'
 import * as http from 'http'
 import * as https from 'https'
@@ -152,13 +158,14 @@ export class TinyHttpAdapter extends AbstractHttpAdapter {
   }
 
   public registerParserMiddleware(prefix?: string, rawBody?: boolean) {
-    if (prefix) {
-      this.use(prefix, json)
-      return this.use(prefix, urlencoded({ extended: true }))
-    }
+    const bodyParserJsonOptions = this.getBodyParserOptions<OptionsJson>(rawBody)
+    const bodyParserUrlencodedOptions = this.getBodyParserOptions<OptionsUrlencoded>(rawBody, { extended: true })
 
-    this.use(json)
-    this.use(urlencoded({ extended: true }))
+    const parserMiddleware = {
+      jsonParser: bodyParserJson(bodyParserJsonOptions),
+      urlencodedParser: bodyParserUrlencoded(bodyParserUrlencodedOptions)
+    }
+    Object.keys(parserMiddleware).forEach((parserKey) => this.use(parserMiddleware[parserKey]))
   }
 
   getType(): string {
@@ -291,5 +298,28 @@ export class TinyHttpAdapter extends AbstractHttpAdapter {
 
       return handlerForHeaderVersioning
     }
+  }
+
+  getBodyParserOptions<ParserOptions extends Options>(
+    rawBody: boolean,
+    options?: ParserOptions | undefined
+  ): ParserOptions {
+    let parserOptions: ParserOptions = options ?? ({} as ParserOptions)
+
+    const rawBodyParser = (req: RawBodyRequest<http.IncomingMessage>, _res: http.ServerResponse, buffer: Buffer) => {
+      if (Buffer.isBuffer(buffer)) {
+        req.rawBody = buffer
+      }
+      return true
+    }
+
+    if (rawBody === true) {
+      parserOptions = {
+        ...parserOptions,
+        verify: rawBodyParser
+      }
+    }
+
+    return parserOptions
   }
 }
