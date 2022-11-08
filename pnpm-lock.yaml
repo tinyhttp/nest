@@ -8,13 +8,11 @@ specifiers:
   '@rollup/plugin-typescript': ^8.2.5
   '@tinyhttp/app': ^2.0.25
   '@tinyhttp/cors': ^2.0.0
-  '@tinyhttp/logger': ^1.3.0
   '@types/node': ^18.11.9
   '@typescript-eslint/eslint-plugin': ^4.29.2
   '@typescript-eslint/parser': ^4.29.2
   body-parser: ^1.20.1
   c8: ^7.8.0
-  cors: ^2.8.5
   esbuild-node-loader: ^0.3.1
   eslint: ^7.32.0
   eslint-config-prettier: ^8.3.0
@@ -31,9 +29,7 @@ specifiers:
 dependencies:
   '@tinyhttp/app': 2.0.25
   '@tinyhttp/cors': 2.0.0
-  '@tinyhttp/logger': 1.3.0
   body-parser: 1.20.1
-  cors: 2.8.5
   sirv: 2.0.2
 
 devDependencies:
@@ -488,15 +484,6 @@ packages:
   /@tinyhttp/forwarded/2.0.5:
     resolution: {integrity: sha512-21Zzu54LQluEtteELAweeU5pssvHEp4uxTjYRzHQ/dN5vake6Ghsr87nk+rlvcTXJsbl95ADyt9EHO6EWr1PhQ==}
     engines: {node: '>=12.4.0'}
-    dev: false
-
-  /@tinyhttp/logger/1.3.0:
-    resolution: {integrity: sha512-u8vbW8OEPur3ZlkJGNO+Nl/xw78cdIaDAcWMUEg7o3UY9L5xezMQcLBPX8ykJLEB+Yl+BDmTvt1s1LzkwM6mNQ==}
-    engines: {node: '>=12.4.0'}
-    dependencies:
-      colorette: 1.4.0
-      dayjs: 1.11.6
-      http-status-emojis: 2.2.0
     dev: false
 
   /@tinyhttp/proxy-addr/2.0.5:
@@ -1025,10 +1012,6 @@ packages:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
     dev: true
 
-  /colorette/1.4.0:
-    resolution: {integrity: sha512-Y2oEozpomLn7Q3HFP7dpww7AtMJplbM9lGZP6RDfHqmbeRjiwRg4n6VM6j4KLmRke85uWEI7JqF17f3pqdRA0g==}
-    dev: false
-
   /combined-stream/1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
@@ -1090,14 +1073,6 @@ packages:
     resolution: {integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==}
     dev: true
 
-  /cors/2.8.5:
-    resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
-    engines: {node: '>= 0.10'}
-    dependencies:
-      object-assign: 4.1.1
-      vary: 1.1.2
-    dev: false
-
   /cosmiconfig/7.0.1:
     resolution: {integrity: sha512-a1YWNUV2HwGimB7dU2s1wUMurNKjpx60HxBB6xUM8Re+2s1g1IIfJvFR0/iCF+XHdE0GMTKTuLR32UQff4TEyQ==}
     engines: {node: '>=10'}
@@ -1126,10 +1101,6 @@ packages:
     resolution: {integrity: sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==}
     engines: {node: '>=8'}
     dev: true
-
-  /dayjs/1.11.6:
-    resolution: {integrity: sha512-zZbY5giJAinCG+7AGaw0wIhNZ6J8AhWuSXKvuc1KAyMiRsvGQWqh4L+MomvhdAYjN+lqvVCMq1I41e3YHvXkyQ==}
-    dev: false
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -1903,10 +1874,6 @@ packages:
       toidentifier: 1.0.1
     dev: false
 
-  /http-status-emojis/2.2.0:
-    resolution: {integrity: sha512-ompKtgwpx8ff0hsbpIB7oE4ax1LXoHmftsHHStMELX56ivG3GhofTX8ZHWlUaFKfGjcGjw6G3rPk7dJRXMmbbg==}
-    dev: false
-
   /human-signals/2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
@@ -2356,11 +2323,6 @@ packages:
     dependencies:
       path-key: 3.1.1
     dev: true
-
-  /object-assign/4.1.1:
-    resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
-    engines: {node: '>=0.10.0'}
-    dev: false
 
   /object-hash/3.0.0:
     resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
@@ -3087,11 +3049,6 @@ packages:
       spdx-correct: 3.1.1
       spdx-expression-parse: 3.0.1
     dev: true
-
-  /vary/1.1.2:
-    resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
-    engines: {node: '>= 0.8'}
-    dev: false
 
   /webidl-conversions/3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}

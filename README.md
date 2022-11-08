@@ -20,17 +20,15 @@ pnpm i @tinyhttp/@tinyhttp/nest
 ## Usage:
 
 ```typescript
-
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import {NestTinyHttpApplication} from '@tinyhttp/nest'
+import { NestFactory } from '@nestjs/core'
+import { AppModule } from './app.module'
+import { NestTinyHttpApplication } from '@tinyhttp/nest'
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestTinyHttpApplication>(AppModule);
-  await app.listen(3000);
+  const app = await NestFactory.create<NestTinyHttpApplication>(AppModule)
+  await app.listen(3000)
 }
-bootstrap();
-
+bootstrap()
 ```
 
 [npm-url]: https://npmjs.com/package/@tinyhttp/nest
