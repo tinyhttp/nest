@@ -21,6 +21,7 @@ import * as https from 'https'
 import { App, Response, Request } from '@tinyhttp/app'
 import { AbstractHttpAdapter } from '@nestjs/core'
 import { default as sirv, Options as SirvOptions } from 'sirv'
+import { Duplex } from 'stream'
 
 export interface SirvNestOptions extends SirvOptions {
   prefix?: string
@@ -34,6 +35,7 @@ export type VersionedRoute = <TRequest extends Record<string, any> = any, TRespo
 
 export class TinyHttpAdapter extends AbstractHttpAdapter {
   private readonly routerMethodFactory = new RouterMethodFactory()
+  private readonly openConnections = new Set<Duplex>()
   constructor(instance?: any) {
     super(instance ?? new App())
   }
@@ -54,7 +56,7 @@ export class TinyHttpAdapter extends AbstractHttpAdapter {
   }
 
   public render(response: Response, view: string, options: any) {
-    throw new Error('Method not implemented.')
+    return response.render(view, options)
   }
 
   public redirect(response: Response, statusCode: number, url: string) {
@@ -62,18 +64,10 @@ export class TinyHttpAdapter extends AbstractHttpAdapter {
   }
 
   public setErrorHandler(handler: Function, prefix?: string) {
-    if (prefix) {
-      return this.use(prefix, handler)
-    }
-
     return this.use(handler)
   }
 
   public setNotFoundHandler(handler: Function, prefix?: string) {
-    if (prefix) {
-      return this.use(prefix, handler)
-    }
-
     return this.use(handler)
   }
 
@@ -97,19 +91,19 @@ export class TinyHttpAdapter extends AbstractHttpAdapter {
     return new Promise((resolve) => this.httpServer.close(resolve))
   }
   public set(...args: any[]) {
-    throw new Error('Method not implemented.')
+    return this.instance.set(...args)
   }
 
   public enable(...args: any[]) {
-    throw new Error('Method not implemented.')
+    return this.instance.enable(...args)
   }
 
   public disable(...args: any[]) {
-    throw new Error('Method not implemented.')
+    return this.instance.disable(...args)
   }
 
   public engine(...args: any[]) {
-    throw new Error('Method not implemented.')
+    return this.instance.engine(...args)
   }
 
   public useStaticAssets(path: string, options: SirvNestOptions) {
@@ -121,8 +115,12 @@ export class TinyHttpAdapter extends AbstractHttpAdapter {
     return this.use(serve)
   }
 
+  public setBaseViewsDir(path: string | string[]) {
+    return this.set('views', path)
+  }
+
   public setViewEngine(engine: string) {
-    throw new Error('Method not implemented.')
+    return this.set('view engine', engine)
   }
 
   public getRequestHostname(req: Request) {
@@ -147,14 +145,31 @@ export class TinyHttpAdapter extends AbstractHttpAdapter {
   }
 
   public initHttpServer(options: NestApplicationOptions) {
-    const isHttpsEnabled = options.httpsOptions
+    const isHttpsEnabled = options && options.httpsOptions
     if (isHttpsEnabled) {
-      this.httpServer = https.createServer(options.httpsOptions, this.getInstance().handler)
-      return
+      this.httpServer = https.createServer(options.httpsOptions, this.getInstance())
+    } else {
+      this.httpServer = http.createServer(this.getInstance())
     }
-    this.httpServer = http.createServer(this.getInstance().handler)
 
-    this.getInstance().server = this.httpServer
+    if (options?.forceCloseConnections) {
+      this.trackOpenConnections()
+    }
+  }
+
+  private trackOpenConnections() {
+    this.httpServer.on('connection', (socket: Duplex) => {
+      this.openConnections.add(socket)
+
+      socket.on('close', () => this.openConnections.delete(socket))
+    })
+  }
+
+  private closeOpenConnections() {
+    for (const socket of this.openConnections) {
+      socket.destroy()
+      this.openConnections.delete(socket)
+    }
   }
 
   public registerParserMiddleware(prefix?: string, rawBody?: boolean) {
