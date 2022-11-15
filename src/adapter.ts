@@ -23,7 +23,7 @@ import { AbstractHttpAdapter } from '@nestjs/core'
 import { default as sirv, Options as SirvOptions } from 'sirv'
 import { Duplex } from 'stream'
 
-export interface SirvNestOptions extends SirvOptions {
+export interface ServeStaticOptions extends SirvOptions {
   prefix?: string
 }
 
@@ -106,7 +106,7 @@ export class TinyHttpAdapter extends AbstractHttpAdapter {
     return this.instance.engine(...args)
   }
 
-  public useStaticAssets(path: string, options: SirvNestOptions) {
+  public useStaticAssets(path: string, options: ServeStaticOptions) {
     const serve = sirv(path, options)
     if (options?.prefix) {
       return this.use(options.prefix, serve)
@@ -136,8 +136,7 @@ export class TinyHttpAdapter extends AbstractHttpAdapter {
   }
 
   public enableCors(options: any) {
-    let mw = cors(options)
-    return this.use(mw)
+    return this.use(cors(options))
   }
 
   public createMiddlewareFactory(requestMethod: RequestMethod): (path: string, callback: Function) => any {
