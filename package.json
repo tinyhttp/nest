@@ -42,15 +42,15 @@
     "@tinyhttp/app": "^2.0.25",
     "@tinyhttp/cors": "^2.0.0",
     "body-parser": "^1.20.1",
-    "sirv": "^2.0.2"
+    "sirv": "^2.0.2",
+    "@nestjs/common": "^9.2.1",
+    "@nestjs/core": "^9.2.1"
   },
   "peerDependencies": {
-    "@nestjs/common": "^9.2.0",
-    "@nestjs/core": "^9.2.0"
+    "@nestjs/common": "^9.2.1",
+    "@nestjs/core": "^9.2.1"
   },
   "devDependencies": {
-    "@nestjs/common": "^9.2.0",
-    "@nestjs/core": "^9.2.0",
     "@types/node": "^18.11.9",
     "@commitlint/cli": "13.1.0",
     "@commitlint/config-conventional": "13.1.0",
