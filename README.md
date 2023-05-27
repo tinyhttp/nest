@@ -11,7 +11,7 @@ Nest.js adapter for tinyhttp
 ## Install
 
 ```sh
-pnpm i @tinyhttp/@tinyhttp/nest
+pnpm i @tinyhttp/nest
 ```
 
 ## Usage:
